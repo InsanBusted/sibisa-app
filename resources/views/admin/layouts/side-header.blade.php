@@ -1,9 +1,8 @@
-<div class="side-header-inner custom-scroll">
-
+<div class="">
     <nav class="side-header-menu" id="side-header-menu">
         <ul>
-            <li class="has-sub-menu"><a href="#"><i class="ti-home"></i> <span>Dashboard</span></a></li>
+            <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ route('mahasiswa') }}">Mahasiswa</a></li>
         </ul>
     </nav>
-
-</div><!-- Side Header Inner End -->
+</div>

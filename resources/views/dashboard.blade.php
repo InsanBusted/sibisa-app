@@ -39,13 +39,11 @@
                         <!-- Table Head Start -->
                         <thead>
                             <tr>
-                                <th class="selector"><label class="adomx-checkbox"><input type="checkbox"> <i class="icon"></i></label></th>
+                                <th>No</th>
                                 <!--<th class="selector h5"><button class="button-check"></button></th>-->
-                                <th><span>Image</span></th>
-                                <th><span>Product Name</span></th>
-                                <th><span>ID</span></th>
-                                <th><span>Quantity</span></th>
-                                <th><span>Price</span></th>
+                                <th><span>Tanggal</span></th>
+                                <th><span>Jam</span></th>
+                                <th><span>Dosen Pembimbing</span></th>
                                 <th><span>Status</span></th>
                                 <th><span>Aksi</span></th>
                                 <th></th>
@@ -55,13 +53,11 @@
                         <!-- Table Body Start -->
                         <tbody>
                             <tr>
-                                <td class="selector"><label class="adomx-checkbox"><input type="checkbox"> <i class="icon"></i></label></td>
-                                <td><img src="assets/images/product/list-product-1.jpg" alt="" class="table-product-image rounded-circle"></td>
-                                <td><a href="#">Microsoft surface pro 4</a></td>
-                                <td>#MSP40022</td>
-                                <td>05 - Products</td>
-                                <td>$60000000.00</td>
-                                <td><span class="badge badge-success">Paid</span></td>
+                                <td>1</td>
+                                <td>{{ date('Y-m-d') }}</td>
+                                <td>{{ now()->format('H:i') }}</td>
+                                <td>Ahmad Rio</td>
+                                <td><span class="badge badge-success">Disetujui</span></td>
                                 <td><a class="h3" href="#"><i class="zmdi zmdi-more"></i></a></td>
                             </tr>
                         </tbody><!-- Table Body End -->
