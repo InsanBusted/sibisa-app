@@ -207,7 +207,17 @@
                                     </ul>
                                     <ul>
                                         <li><a href="#"><i class="zmdi zmdi-settings"></i>Setting</a></li>
-                                        <li><a href="#"><i class="zmdi zmdi-lock-open"></i>Sing out</a></li>
+                                        <li>
+                                            <form method="POST" action="{{ route('logout') }}">
+                                                @csrf
+
+                                                <a :href="route('logout')"
+                                                        onclick="event.preventDefault();
+                                                                    this.closest('form').submit();">
+                                                    {{ __('Log Out') }}
+                                                </a>
+                                            </form>
+                                        </li>
                                     </ul>
                                     <ul>
                                         <li><a href="#"><i class="zmdi zmdi-paypal"></i>Payment</a></li>

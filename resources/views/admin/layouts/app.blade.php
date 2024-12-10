@@ -15,7 +15,7 @@
 	============================================ -->
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('assets/css/vendor/bootstrap.min.css')}}">
 
     <!-- Icon Font CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/vendor/material-design-iconic-font.min.css') }}">
