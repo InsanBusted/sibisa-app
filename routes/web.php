@@ -16,10 +16,14 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'role:admin|mahasiswa'])->group(function () {
     Route::get('/mahasiswa', [MahasiswaController::class, "index"])->name('mahasiswa');
     Route::post('/mahasiswa', [MahasiswaController::class, "store"])->name('add-mahasiswa');
+    Route::put('/mahasiswa/{mahasiswa}', [MahasiswaController::class, "update"])->name('edit-mahasiswa');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/prodi', [ProdiController::class, "index"])->name('prodi');
+    Route::post('/prodi', [ProdiController::class, "store"])->name('add-prodi');
+    Route::put('/prodi/{prodi}', [ProdiController::class, "update"])->name('edit-prodi');
+    Route::delete('/prodi/{prodi}', [ProdiController::class, "destroy"])->name('delete-prodi');
 });
 
 
