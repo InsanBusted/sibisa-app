@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ProfileController;
@@ -26,6 +27,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/mahasiswa', [MahasiswaController::class, "store"])->name('add-mahasiswa');
     Route::put('/mahasiswa/{mahasiswa}', [MahasiswaController::class, "update"])->name('edit-mahasiswa');
     Route::delete('/mahasiswa/{mahasiswa}', [MahasiswaController::class, "destroy"])->name('delete-mahasiswa');
+
+    // dosen
+    Route::get('/dosen', [DosenController::class, "index"])->name('dosen');
+    Route::post('/dosen', [DosenController::class, "store"])->name('add-dosen');
 });
 
 
