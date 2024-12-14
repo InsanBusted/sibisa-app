@@ -1,21 +1,22 @@
 <?php
 
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\JadwalBimbinganController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ProfileController;
+use App\Models\JadwalBimbingan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(middleware: ['auth', 'verified'])->name('dashboard');
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/dashboard', [JadwalBimbinganController::class, "index"])->name('dashboard');
+    Route::put('/dashboard/{jadwalbimbingan}', [JadwalBimbinganController::class, "update"])->name('edit-jadwal');
     // prodi
     Route::get('/prodi', [ProdiController::class, "index"])->name('prodi');
     Route::post('/prodi', [ProdiController::class, "store"])->name('add-prodi');
@@ -27,10 +28,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/mahasiswa', [MahasiswaController::class, "store"])->name('add-mahasiswa');
     Route::put('/mahasiswa/{mahasiswa}', [MahasiswaController::class, "update"])->name('edit-mahasiswa');
     Route::delete('/mahasiswa/{mahasiswa}', [MahasiswaController::class, "destroy"])->name('delete-mahasiswa');
+    Route::get('/mahasiswa/search', [MahasiswaController::class, 'search'])->name('search-mahasiswa');
+
+
+    
 
     // dosen
     Route::get('/dosen', [DosenController::class, "index"])->name('dosen');
     Route::post('/dosen', [DosenController::class, "store"])->name('add-dosen');
+    Route::put('/dosen/{dosen}', [DosenController::class, "update"])->name('edit-dosen');
+    Route::delete('/dosen/{dosen}', [DosenController::class, "destroy"])->name('delete-dosen');
+    Route::get('/search', [DosenController::class, 'search'])->name('search-dosen');
+
 });
 
 
