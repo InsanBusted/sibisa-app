@@ -17,6 +17,8 @@ Route::get('/', function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [JadwalBimbinganController::class, "index"])->name('dashboard');
     Route::put('/dashboard/{jadwalbimbingan}', [JadwalBimbinganController::class, "update"])->name('edit-jadwal');
+    Route::delete('/dashboard/{jadwalbimbingan}', [JadwalBimbinganController::class, "destroy"])->name('delete-jadwal');
+    Route::post('/dashboard', [JadwalBimbinganController::class, "store"])->name('add-jadwal');
     // prodi
     Route::get('/prodi', [ProdiController::class, "index"])->name('prodi');
     Route::post('/prodi', [ProdiController::class, "store"])->name('add-prodi');
@@ -39,6 +41,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/dosen/{dosen}', [DosenController::class, "update"])->name('edit-dosen');
     Route::delete('/dosen/{dosen}', [DosenController::class, "destroy"])->name('delete-dosen');
     Route::get('/search', [DosenController::class, 'search'])->name('search-dosen');
+    Route::get('/dosen/{id}/detail', [DosenController::class, 'show'])->name('detail-dosen');
 
 });
 

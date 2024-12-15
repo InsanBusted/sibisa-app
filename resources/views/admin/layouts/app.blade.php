@@ -31,6 +31,8 @@
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/select2.min.css')}}">
+
 
 
 </head>
@@ -71,6 +73,7 @@
     <!-- Global Vendor, plugins & Activation JS -->
     <script src="{{asset('assets/js/vendor/modernizr-3.6.0.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery-3.7.1.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/popper.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/bootstrap.min.js')}}"></script>
     <!--Plugins JS-->
@@ -78,6 +81,7 @@
     <script src="{{asset('assets/js/plugins/tippy4.min.js.js')}}"></script>
     <!--Main JS-->
     <script src="{{asset('assets/js/main.js')}}"></script>
+    <script src="{{asset('assets/js/select2.min.js')}}"></script>
 
     <!-- Plugins & Activation JS For Only This Page -->
 
@@ -98,6 +102,7 @@
     <script src="{{asset('assets/js/plugins/vmap/maps/samples/jquery.vmap.sampledata.js')}}"></script>
     <script src="{{asset('assets/js/plugins/vmap/vmap.active.js')}}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </body>
 
 </html>

@@ -394,12 +394,22 @@
         resize();
     });
 
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: "Pilih Data", // Placeholder text
+            allowClear: true // Menambahkan tombol clear
+        });
+    });
+
     /*--
     Custom Scrollbar (Perfect Scrollbar)
 -----------------------------------*/
-    $(".custom-scroll").each(function () {
-        var ps = new PerfectScrollbar($(this)[0]);
-    });
+    // $(".custom-scroll").each(function () {
+    //     var ps = new PerfectScrollbar($(this)[0]);
+    // });
+
+    
 })(jQuery);
+
 
 
