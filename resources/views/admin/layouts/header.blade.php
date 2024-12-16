@@ -3,10 +3,11 @@
 
         <!-- Header Logo (Header Left) Start -->
         <div class="header-logo col-auto">
-            <a href="index.html">
+            <h1 class="text-white"><a href="{{route('dashboard')}}"><i>SIBISA <span class="text-warning">APP</span></i></a></h1>
+            {{-- <a href="index.html">
                 <img src="assets/images/logo/logoheader.png" alt="">
                 <img src="assets/images/logo/logoheader.png" class="logo-light" alt="">
-            </a>
+            </a> --}}
         </div><!-- Header Logo (Header Left) End -->
 
         <!-- Header Right Start -->
