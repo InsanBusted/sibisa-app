@@ -8398,6 +8398,9 @@ body.side-header-green .side-header .side-header-close {
 .todo-list li .list-action button.remove:hover {
   color: #fd427c;
 }
+.todo-list li .list-action button.button:hover {
+  color: blue;
+}
 .todo-list li.done .list-content p {
   text-decoration: line-through;
 }

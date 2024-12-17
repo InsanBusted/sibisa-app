@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Dosen;
 use App\Models\JadwalBimbingan;
 use App\Models\Mahasiswa;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\JadwalBimbingan as JadwalBimbinganNotification;
 
 class JadwalBimbinganController extends Controller
 {
@@ -17,6 +20,7 @@ class JadwalBimbinganController extends Controller
         $jadwalBimbingan = JadwalBimbingan::with('mahasiswa', 'dosen')->orderBy('id', 'asc')->paginate(5);
         $dosen = Dosen::all();
         $mahasiswa = Mahasiswa::all();
+        
         // dd($jadwalBimbingan);
         return view('dashboard.index', compact('jadwalBimbingan', 'dosen', 'mahasiswa'));
     }
@@ -52,25 +56,36 @@ class JadwalBimbinganController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi data
         $request->validate([
             'tanggal' => 'required|date',
             'jam' => 'required',
             'dosen_id' => 'required|exists:dosens,id',
             'mahasiswa_id' => 'required|exists:mahasiswas,id',
             'status' => 'required|in:Pending,Disetujui,Ditolak',
-            ]);
+        ]);
 
-        $data = [
+        // Simpan data jadwal ke dalam database
+        $jadwal = JadwalBimbingan::create([
             'tanggal' => $request->input('tanggal'),
             'jam' => $request->input('jam'),
             'dosen_id' => $request->input('dosen_id'),
             'mahasiswa_id' => $request->input('mahasiswa_id'),
             'status' => $request->input('status'),
-        ];
+        ]);
 
-        JadwalBimbingan::create($data);
-        return redirect()->route('dashboard')->with('success', 'Berhasil Menambahkan data!');
+        // Ambil data pengguna (dosen dan mahasiswa) berdasarkan ID
+        $dosenUser = User::where('id', $jadwal->dosen->user_id)->first();
+        $mahasiswaUser = User::where('id', $jadwal->mahasiswa->user_id)->first();
+
+        // Kirim notifikasi ke dosen dan mahasiswa
+        $users = collect([$dosenUser, $mahasiswaUser])->filter(); // Pastikan data tidak null
+        Notification::send($users, new JadwalBimbinganNotification($jadwal->tanggal, $jadwal->jam, $jadwal->status));
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('dashboard')->with('success', 'Berhasil Menambahkan data dan Notifikasi Terkirim!');
     }
+
 
     /**
      * Display the specified resource.

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reply extends Model
 {
     protected $table = "replies";
-    protected $fillable = ['content', 'user_id', 'forum_id'];
+    protected $fillable = ['content', 'user_id', 'forum_id','parent_id'];
 
     public function user()
     {
@@ -18,4 +18,5 @@ class Reply extends Model
     {
         return $this->belongsTo(ForumDiskusi::class);
     }
+    
 }

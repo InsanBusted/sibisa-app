@@ -7,6 +7,7 @@ use App\Http\Controllers\JadwalBimbinganController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReplyController;
 use App\Models\ForumDiskusi;
 use App\Models\JadwalBimbingan;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +18,7 @@ Route::get('/', function () {
 
 
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin|mahasiswa'])->group(function () {
     Route::get('/dashboard', [JadwalBimbinganController::class, "index"])->name('dashboard');
     Route::put('/dashboard/{jadwalbimbingan}', [JadwalBimbinganController::class, "update"])->name('edit-jadwal');
     Route::get('/search', [JadwalBimbinganController::class, 'search'])->name('search-jadwal');
@@ -39,20 +40,24 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     
     
     
-    
     // dosen
     Route::get('/dosen', [DosenController::class, "index"])->name('dosen');
     Route::post('/dosen', [DosenController::class, "store"])->name('add-dosen');
     Route::put('/dosen/{dosen}', [DosenController::class, "update"])->name('edit-dosen');
     Route::delete('/dosen/{dosen}', [DosenController::class, "destroy"])->name('delete-dosen');
-    Route::get('/search', [DosenController::class, 'search'])->name('search-dosen');
+    Route::get('/dosen/search', [DosenController::class, 'search'])->name('search-dosen');
     Route::get('/dosen/{id}/detail', [DosenController::class, 'show'])->name('detail-dosen');
     Route::put('/dosen/jadwal/{jadwaldetail}/update', [DosenController::class, 'updateDetail'])->name('edit-detail');
     
     // Forum Diskusi
     Route::get('/forums', [ForumController::class, "index"])->name('forum');
-
-
+    Route::post('/forums', [ForumController::class, "store"])->name('add-forum');
+    Route::put('/forums/{forum}', [ForumController::class, "update"])->name('edit-forum');
+    Route::get('/forum/{id}', [ForumController::class, 'show'])->name('detail-forum');
+    Route::delete('/forum/{forum}', [ForumController::class, "destroy"])->name('delete-forum');
+    Route::get('/forums/search', [ForumController::class, 'search'])->name('search-forum');
+    Route::post('/forums/{forumId}/replies', [ReplyController::class, 'store'])->name('add-reply');
+    
 });
 
 

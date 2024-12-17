@@ -3,7 +3,7 @@
 @section("content")
 
 <div class="row">
-    <div class="col-6 mb-30">
+    <div class="col-md-6 mb-30">
         <div class="box">
             <div class="box-head">
                 <h4 class="title">Tambah Program Studi</h4>
@@ -40,7 +40,7 @@
         </div>
     </div>
     {{-- Daftar Prodi --}}
-    <div class="col-6 mb-30">
+    <div class="col-md-6 mb-30">
         <div class="box">
             <div class="box-head">
                 <h4 class="title">Daftar Prodi</h4>
@@ -86,7 +86,7 @@
                                 <td>{{ $p->nama }}</td>
                                 <td>
                                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editprodi{{ $p->id }}">Edit</button>
-                                    {{-- modal --}}
+                                    {{-- modal edit --}}
                                     <div class="modal fade" id="editprodi{{ $p->id }}">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
