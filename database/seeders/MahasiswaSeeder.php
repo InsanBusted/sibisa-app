@@ -22,7 +22,7 @@ class MahasiswaSeeder extends Seeder
                 'nama' => 'Mahasiswa ' . $i,
                 'email' => 'mahasiswa' . $i .'@mahasiswa.com',
                 'prodi_id' => rand(1, 3), 
-                'jadwalbimbingan_id' => rand(1, 10), 
+                'jadwal_bimbingan_id' => rand(1, 10), 
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

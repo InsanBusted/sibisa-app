@@ -9,7 +9,7 @@ class Dosen extends Model
 {
     use HasRoles;
     protected $table = "dosens";
-    protected $fillable = ['nip','nama','email', 'prodi_id','jadwalbimbingan_id']; 
+    protected $fillable = ['nip','nama','email', 'prodi_id','jadwal_bimbingan_id']; 
 
     public function prodi() {
         return $this->belongsTo(Prodi::class,'prodi_id');

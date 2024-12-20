@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dosens', function (Blueprint $table) {
+        Schema::create('riwayat_bimbingans', function (Blueprint $table) {
             $table->id();
-            $table->string('nip');
-            $table->string('nama');
-            $table->string('email');
-            $table->unsignedBigInteger('prodi_id');
-            $table->foreign('prodi_id')->cascadeOnDelete()->cascadeOnUpdate()->references('id')->on('prodi');
-            $table->unsignedBigInteger('jadwal_bimbingan_id')->nullable();
+            $table->unsignedBigInteger('jadwal_bimbingan_id');
             $table->foreign('jadwal_bimbingan_id')->cascadeOnDelete()->cascadeOnUpdate()->references('id')->on('jadwal_bimbingans');
+            $table->text('catatan_dosen')->nullable(); // Menambahkan catatan untuk dosen
+            $table->text('catatan_mahasiswa')->nullable(); // Menambahkan catatan untuk mahasiswa
+            $table->enum('status', ['Proses', 'Revisi', 'ACC'])->default('Proses');
+            $table->string('file')->nullable(); // Kolom untuk menyimpan nama file yang diupload
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dosens');
+        Schema::dropIfExists('riwayat_bimbingans');
     }
 };

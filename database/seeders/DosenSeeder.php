@@ -21,7 +21,7 @@ class DosenSeeder extends Seeder
                 'nama' => 'Dosen ' . $i,
                 'email' => 'dosen' . $i . '@example.com',
                 'prodi_id' => rand(1, 3), 
-                'jadwalbimbingan_id' => rand(2, 21), 
+                'jadwal_bimbingan_id' => rand(2, 21), 
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

@@ -8,6 +8,7 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReplyController;
+use App\Http\Controllers\RiwayatBimbinganController;
 use App\Models\ForumDiskusi;
 use App\Models\JadwalBimbingan;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,13 @@ Route::middleware(['auth', 'role:admin|mahasiswa'])->group(function () {
     Route::delete('/forum/{forum}', [ForumController::class, "destroy"])->name('delete-forum');
     Route::get('/forums/search', [ForumController::class, 'search'])->name('search-forum');
     Route::post('/forums/{forumId}/replies', [ReplyController::class, 'store'])->name('add-reply');
+    
+    // Riwayat Bimbingan
+    Route::get('/riwayat', [RiwayatBimbinganController::class, "index"])->name('riwayat');
+    Route::post('/riwayat', [RiwayatBimbinganController::class, "store"])->name('add-riwayat');
+    Route::get('/riwayat/{id}/edit', [RiwayatBimbinganController::class, "edit"])->name('edit-riwayat');
+    Route::put('/riwayat/{riwayatBimbingan}/edited', [RiwayatBimbinganController::class, "update"])->name('update-riwayat');
+    Route::get('/riwayat/{mahasiswaId}', [RiwayatBimbinganController::class, "show"])->name('detail-riwayat');
     
 });
 

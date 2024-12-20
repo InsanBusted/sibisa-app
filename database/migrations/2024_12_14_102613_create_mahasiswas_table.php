@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('email');
             $table->unsignedBigInteger('prodi_id')->nullable();
             $table->foreign('prodi_id')->cascadeOnDelete()->cascadeOnUpdate()->references('id')->on('prodi');
-            $table->unsignedBigInteger('jadwalbimbingan_id')->nullable();
-            $table->foreign('jadwalbimbingan_id')->cascadeOnDelete()->cascadeOnUpdate()->references('id')->on('jadwal_bimbingans');
+            $table->unsignedBigInteger('jadwal_bimbingan_id')->nullable();
+            $table->foreign('jadwal_bimbingan_id')->cascadeOnDelete()->cascadeOnUpdate()->references('id')->on('jadwal_bimbingans');
             $table->timestamps();
         }); 
     }

@@ -19,4 +19,9 @@ class JadwalBimbingan extends Model
     public function dosen() {
         return $this->belongsTo(Dosen::class,'dosen_id');
     }
+
+    public function riwayatBimbingan()
+    {
+        return $this->hasMany(RiwayatBimbingan::class);
+    }
 }

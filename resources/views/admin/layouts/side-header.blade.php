@@ -7,6 +7,7 @@
             <li><a href="{{ route('prodi') }}">Prodi</a></li>
             <li><a href="{{ route('dosen') }}">Dosen</a></li>
             <li><a href="{{ route('forum') }}">Forum Diskusi</a></li>
+            <li><a href="{{ route('riwayat') }}">Riwayat</a></li>
             @endrole
         </ul>
     </nav>
