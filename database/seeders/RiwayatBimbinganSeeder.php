@@ -17,7 +17,8 @@ class RiwayatBimbinganSeeder extends Seeder
         foreach (range(1, 13) as $index) {
             RiwayatBimbingan::create([
                 'jadwal_bimbingan_id' => rand(24, 35),
-                'catatan' => 'Catatan ke-' . $index . ' untuk Bimbingan',
+                'catatan_dosen' => 'Catatan ke-' . $index . ' untuk Bimbingan',
+                'catatan_mahasiswa' => 'Catatan ke-' . $index . ' untuk Bimbingan',
                 'status' => $this->getRandomStatus(), // Ambil status acak
             ]);
         }

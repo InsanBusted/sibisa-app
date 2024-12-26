@@ -28,6 +28,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // Redirect berdasarkan peran
+        if (Auth::user()->hasRole('mahasiswa')) {
+            return redirect()->route('index-mahasiswa');
+        }
+
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

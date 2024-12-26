@@ -1,3 +1,4 @@
+@role('admin')
 <div class="container-fluid">
     <div class="row justify-content-between align-items-center">
 
@@ -219,3 +220,65 @@
 
     </div>
 </div>
+@endrole
+
+@role('mahasiswa|dosen')
+<nav class="navbar navbar-expand-lg navbar-white bg-white text-dark p-3" >
+    <div class="container-fluid align-items-center">
+        <!-- Logo -->
+        <div class="d-flex align-items-center">
+            <h2 class=""><a href="{{ route('dashboard') }}" class="text-decoration-none text-primary-sibisa">
+               <i> SIBISA APP</i>
+            </a></h2>
+        </div>
+
+        <!-- Hamburger Button for Mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-dark active" href="#">Beranda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark " href="#">Jadwal</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark " href="#">Riwayat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark " href="#">Forum</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Profile Section -->
+    <div class="d-flex align-items-center dropdown">
+        <a 
+            href="#" 
+            class="text-dark fw-bold dropdown-toggle" 
+            id="profileDropdown" 
+            role="button" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false">
+            <span class="fa fa-user-circle"></span> {{ Auth::user()->name }}
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="dropdown-item text-danger" type="submit">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+    </div>
+</nav>
+
+@endrole

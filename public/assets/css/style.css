@@ -244,6 +244,12 @@ img {
   clear: both;
 }
 
+.text-primary-sibisa {
+  background: linear-gradient(90deg, #1460C8 17%, #0A2F62 84%);
+  -webkit-background-clip: text; /* Membatasi gradasi ke area teks */
+  -webkit-text-fill-color: transparent; /* Membuat latar belakang teks transparan */
+}
+
 .section, .main-wrapper {
   float: left;
   width: 100%;
@@ -257,6 +263,16 @@ img {
       -ms-flex-direction: column;
           flex-direction: column;
   min-height: 100%;
+}
+
+.main-wrapper.bg-mahasiswa-dosen {
+  background: linear-gradient(90deg, #1460C8 17%, #0A2F62 84%);
+}
+
+@media (max-width: 768px) {
+  .dropdown-menu {
+      margin-left: 5rem; /* Pastikan dropdown menempel di kanan */
+  }
 }
 
 @media only screen and (max-width: 575px) {
@@ -629,6 +645,11 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   right: 0;
   top: 0;
 }
+
+td.profile-td {
+  border-color: rgba(255, 255, 255, 0);
+}
+
 .datepicker table tbody tr td {
   font-size: 14px;
   color: #666666;

@@ -23,6 +23,11 @@ return new class extends Migration
             $table->foreign('prodi_id')->cascadeOnDelete()->cascadeOnUpdate()->references('id')->on('prodi');
             $table->unsignedBigInteger('jadwal_bimbingan_id')->nullable();
             $table->foreign('jadwal_bimbingan_id')->cascadeOnDelete()->cascadeOnUpdate()->references('id')->on('jadwal_bimbingans');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
             $table->timestamps();
         }); 
     }

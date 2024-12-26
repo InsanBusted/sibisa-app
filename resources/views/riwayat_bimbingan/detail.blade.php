@@ -120,20 +120,24 @@
     <form action="{{ route('add-riwayat') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="mahasiswa_id" value="{{ $mahasiswa->id }}">
+        <input type="hidden" name="jadwal_bimbingan_id">
+    
         
         <div class="mb-3">
             <label for="catatan_dosen">Catatan Dosen</label>
             <input name="catatan_dosen" id="catatan_dosen" class="form-control">
-    
+        </div>
+        
         <div class="mb-3">
             <label for="catatan_mahasiswa">Catatan Mahasiswa</label>
             <input name="catatan_mahasiswa" id="catatan_mahasiswa" class="form-control">
         </div>
+        
         <div class="mb-3">
             <label for="formFile" class="form-label">File (Gambar/Docx/Pdf) Max 5MB</label>
             <input name="file" class="form-control" type="file" id="formFile" accept=".jpg,.jpeg,.png,.pdf,.docx">
         </div>
-    
+        
         <div class="mb-3">
             <label for="status">Status</label>
             <select name="status" id="status" class="form-control">
@@ -142,8 +146,9 @@
                 <option value="ACC">ACC</option>
             </select>
         </div>
-    
+        
         <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
+    
     
 @endsection

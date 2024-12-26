@@ -2,6 +2,7 @@
 
 @section("content")
 
+@role('admin')
 <div class="row">
     <!-- Top Report Start -->
     <div class="col-xlg-3 col-md-6 col-12 mb-30">
@@ -270,6 +271,8 @@
     <div class="col-6"></div>
     <div class="col-6"></div>
 </div>
+@endrole
+
 
 
 @endsection

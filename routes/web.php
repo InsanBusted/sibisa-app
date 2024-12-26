@@ -6,20 +6,20 @@ use App\Http\Controllers\ForumDiskusiController;
 use App\Http\Controllers\JadwalBimbinganController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\ProdiController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\RiwayatBimbinganController;
-use App\Models\ForumDiskusi;
-use App\Models\JadwalBimbingan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-
-
 Route::middleware(['auth', 'role:admin|mahasiswa'])->group(function () {
+    Route::get('/mhs', [MahasiswaController::class, 'index2'])->name('index-mahasiswa');
+    Route::get('/mhs/dashboard', [JadwalBimbinganController::class, 'index'])->name('dashboard-mahasiswa');
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [JadwalBimbinganController::class, "index"])->name('dashboard');
     Route::put('/dashboard/{jadwalbimbingan}', [JadwalBimbinganController::class, "update"])->name('edit-jadwal');
     Route::get('/search', [JadwalBimbinganController::class, 'search'])->name('search-jadwal');

@@ -40,20 +40,25 @@
 
 <body class="skin-dark">
 
+    @role('admin')
     <div class="main-wrapper">
-
+    @endrole
+    @role('mahasiswa|dosen')
+    <div class="main-wrapper bg-mahasiswa-dosen">
+    @endrole
 
         <!-- Header Section Start -->
         <div class="header-section">
             @include("admin.layouts.header")
         </div><!-- Header Section End -->
         <!-- Side Header Start -->
+        @role('admin')
         <div class="side-header show">
             <button class="side-header-close"><i class="zmdi zmdi-close"></i></button>
             <!-- Side Header Inner Start -->
             @include("admin.layouts.side-header")
         </div><!-- Side Header End -->
-
+        @endrole
         <!-- Content Body Start -->
         <div class="content-body">
 

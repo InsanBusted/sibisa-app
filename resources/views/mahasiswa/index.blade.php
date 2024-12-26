@@ -101,23 +101,23 @@
                                                                 <input type="text" class="form-control" name="nama" placeholder="Nama Mahasiswa" required value="{{ old('nama', $mhs->nama) }}">
                                                             </div>
                                                             <div class="col-12 mb-15">
-                                                                <input type="text" class="form-control" name="email" placeholder="Email Mahasiswa" required value="{{ old('email', $mhs->email) }}">
+                                                                <input type="email" class="form-control" name="email" placeholder="Email Mahasiswa" required value="{{ old('email', $mhs->email) }}">
                                                             </div>
                                                             <div class="col-12 mb-15">
-                                                                <select class="form-control" name="prodi_id">
+                                                                <select class="form-control" name="prodi_id" required>
                                                                     <option hidden>Pilih Prodi</option>
                                                                     @foreach ($prodi as $p)
-                                                                        <option value="{{ $p->id }}" {{ $p->id == $mhs->prodi_id ? 'selected' : '' }} required>{{ $p->nama }}</option>
+                                                                        <option value="{{ $p->id }}" {{ $p->id == $mhs->prodi_id ? 'selected' : '' }}>{{ $p->nama }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>  
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="button button-warning" data-bs-dismiss="modal">Kembali</button>
-                                                        <button type="submit" class="button button-success">Edit</button>
-                                                    </form>
                                                 </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="button button-warning" data-bs-dismiss="modal">Kembali</button>
+                                                    <button type="submit" class="button button-success">Edit</button>
+                                                </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -161,36 +161,40 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{route('add-mahasiswa')}}" method="post">
+                                    <form action="{{ route('add-mahasiswa') }}" method="post">
                                         @csrf
                                         <div class="row mbn-15">
                                             <div class="col-12 mb-15">
-                                                <input type="text" class="form-control" name="nama" placeholder="Nama">
+                                                <input type="text" class="form-control" name="nama" placeholder="Nama" required>
                                             </div>
                                             <div class="col-12 mb-15">
-                                                <input type="text" class="form-control" name="nim" placeholder="NIM">
+                                                <input type="text" class="form-control" name="nim" placeholder="NIM" required>
                                             </div>
                                             <div class="col-12 mb-15">
-                                                <input type="email" class="form-control" name="email" placeholder="Email">
+                                                <input type="email" class="form-control" name="email" placeholder="Email" required>
                                             </div>
                                             <div class="col-12 mb-15">
-                                                <select class="form-control" name="prodi_id">
+                                                <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                            </div>
+                                            <div class="col-12 mb-15">
+                                                <select class="form-control" name="prodi_id" required>
                                                     <option hidden>Pilih Prodi</option>
                                                     @foreach ($prodi as $p)
                                                         <option value="{{ $p->id }}">{{ $p->nama }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>  
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">BATAL</button>
-                                        <button type="submit" class="btn btn-primary">SIMPAN</button>
-                                    </form>
+                                        </div>
                                 </div>
+                                <div class="modal-footer">
+                                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">BATAL</button>
+                                    <button type="submit" class="btn btn-primary">SIMPAN</button>
+                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
+                    
                     
                 </div>
             </div>
