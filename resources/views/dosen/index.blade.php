@@ -208,6 +208,9 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
+                                                    <div class="col-12 mb-15">
+                                                        <input type="password" class="form-control" name="password" placeholder="password" required>
+                                                    </div>
                                                 </div>
                                         </div>
                                         <div class="modal-footer">

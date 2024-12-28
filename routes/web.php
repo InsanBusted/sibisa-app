@@ -4,6 +4,7 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ForumDiskusiController;
 use App\Http\Controllers\JadwalBimbinganController;
+use App\Http\Controllers\jadwalMailController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ReplyController;
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/send-mail', [jadwalMailController::class, 'index']);
 
 Route::middleware(['auth', 'role:admin|mahasiswa'])->group(function () {
     Route::get('/mhs', [MahasiswaController::class, 'index2'])->name('index-mahasiswa');

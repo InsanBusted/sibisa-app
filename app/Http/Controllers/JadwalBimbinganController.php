@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\JadwalBimbinganMail;
 use App\Models\Dosen;
 use App\Models\JadwalBimbingan;
 use App\Models\Mahasiswa;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\JadwalBimbingan as JadwalBimbinganNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class JadwalBimbinganController extends Controller
 {
@@ -31,7 +33,7 @@ class JadwalBimbinganController extends Controller
             // Dosen/Admin dapat melihat semua jadwal
             $jadwalBimbingan = JadwalBimbingan::with('mahasiswa', 'dosen')
                 ->orderBy('id', 'desc')
-                ->get();
+                ->paginate(5);
         }
 
         // Ambil data dosen dan mahasiswa
@@ -71,6 +73,8 @@ class JadwalBimbinganController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
+        $dosen = Dosen::all();
+        $mahasiswa = Mahasiswa::all();
 
         $jadwalBimbingan = JadwalBimbingan::where('tanggal', 'like', "%$search%")
             ->orWhere('jam', 'like', "%$search%")
@@ -90,43 +94,44 @@ class JadwalBimbinganController extends Controller
         $message = null; // Tidak ada pesan jika data ditemukan
     }
 
-        return view('dashboard', compact('jadwalBimbingan', 'message'));
+        return view('dashboard.index', compact('mahasiswa','dosen','jadwalBimbingan', 'message'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        // Validasi data
-        $request->validate([
-            'tanggal' => 'required|date',
-            'jam' => 'required',
-            'dosen_id' => 'required|exists:dosens,id',
-            'mahasiswa_id' => 'required|exists:mahasiswas,id',
-            'status' => 'required|in:Pending,Disetujui,Ditolak',
-        ]);
+{
+    // Validasi data
+    $request->validate([
+        'tanggal' => 'required|date',
+        'jam' => 'required',
+        'dosen_id' => 'required|exists:dosens,id',
+        'mahasiswa_id' => 'required|exists:mahasiswas,id',
+        'status' => 'required|in:Pending,Disetujui,Ditolak',
+    ]);
 
-        // Simpan data jadwal ke dalam database
-        $jadwal = JadwalBimbingan::create([
-            'tanggal' => $request->input('tanggal'),
-            'jam' => $request->input('jam'),
-            'dosen_id' => $request->input('dosen_id'),
-            'mahasiswa_id' => $request->input('mahasiswa_id'),
-            'status' => $request->input('status'),
-        ]);
+    // Simpan data jadwal ke dalam database
+    $jadwal = JadwalBimbingan::create([
+        'tanggal' => $request->input('tanggal'),
+        'jam' => $request->input('jam'),
+        'dosen_id' => $request->input('dosen_id'),
+        'mahasiswa_id' => $request->input('mahasiswa_id'),
+        'status' => $request->input('status'),
+    ]);
 
-        // Ambil data pengguna (dosen dan mahasiswa) berdasarkan ID
-        $dosenUser = User::where('id', $jadwal->dosen->user_id)->first();
-        $mahasiswaUser = User::where('id', $jadwal->mahasiswa->user_id)->first();
+    // Ambil data pengguna (dosen dan mahasiswa) berdasarkan ID
+    $dosenUser = User::where('id', $jadwal->dosen->user_id)->first();
+    $mahasiswaUser = User::where('id', $jadwal->mahasiswa->user_id)->first();
 
-        // Kirim notifikasi ke dosen dan mahasiswa
-        $users = collect([$dosenUser, $mahasiswaUser])->filter(); // Pastikan data tidak null
-        Notification::send($users, new JadwalBimbinganNotification($jadwal->tanggal, $jadwal->jam, $jadwal->status));
+    // Kirim email ke dosen yang dipilih dan admin
+    Mail::to($dosenUser->email)->send(new JadwalBimbinganMail($jadwal));
+    Mail::to($mahasiswaUser->email)->send(new JadwalBimbinganMail($jadwal));
+    Mail::to('insanbusted@gmail.com')->send(new JadwalBimbinganMail($jadwal));
 
-        // Redirect dengan pesan sukses
-        return redirect()->route('dashboard')->with('success', 'Berhasil Menambahkan data dan Notifikasi Terkirim!');
-    }
+    // Redirect dengan pesan sukses
+    return redirect()->route('dashboard')->with('success', 'Berhasil Menambahkan data dan Notifikasi serta Email Terkirim!');
+}
 
     public function store2(Request $request)
     {
@@ -152,9 +157,10 @@ class JadwalBimbinganController extends Controller
         $dosenUser = User::where('id', $jadwal->dosen->user_id)->first();
         $mahasiswaUser = User::where('id', $jadwal->mahasiswa->user_id)->first();
 
-        // Kirim notifikasi ke dosen dan mahasiswa
-        $users = collect([$dosenUser, $mahasiswaUser])->filter(); // Pastikan data tidak null
-        Notification::send($users, new JadwalBimbinganNotification($jadwal->tanggal, $jadwal->jam, $jadwal->status));
+        // Kirim email ke dosen yang dipilih dan admin
+        Mail::to($dosenUser->email)->send(new JadwalBimbinganMail($jadwal));
+        Mail::to($mahasiswaUser->email)->send(new JadwalBimbinganMail($jadwal));
+        Mail::to('insanbusted@gmail.com')->send(new JadwalBimbinganMail($jadwal));
 
         // Redirect dengan pesan sukses
         return redirect()->route('dashboard-mahasiswa')->with('success', 'Berhasil Menambahkan data dan Notifikasi Terkirim!');
@@ -183,9 +189,10 @@ class JadwalBimbinganController extends Controller
         $dosenUser = User::where('id', $jadwal->dosen->user_id)->first();
         $mahasiswaUser = User::where('id', $jadwal->mahasiswa->user_id)->first();
 
-        // Kirim notifikasi ke dosen dan mahasiswa
-        $users = collect([$dosenUser, $mahasiswaUser])->filter(); // Pastikan data tidak null
-        Notification::send($users, new JadwalBimbinganNotification($jadwal->tanggal, $jadwal->jam, $jadwal->status));
+        // Kirim email ke dosen yang dipilih dan admin
+        Mail::to($dosenUser->email)->send(new JadwalBimbinganMail($jadwal));
+        Mail::to($mahasiswaUser->email)->send(new JadwalBimbinganMail($jadwal));
+        Mail::to('insanbusted@gmail.com')->send(new JadwalBimbinganMail($jadwal));
 
         // Redirect dengan pesan sukses
         return redirect()->route('dashboard-dosen')->with('success', 'Berhasil Menambahkan data dan Notifikasi Terkirim!');

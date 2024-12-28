@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Dosen;
 use App\Models\JadwalBimbingan;
 use App\Models\Prodi;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class DosenController extends Controller
 {
@@ -67,37 +69,57 @@ class DosenController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nama' => 'required|min:3|max:50',
-            'email' => 'required|min:3',
-            'nip' => 'required|min:3|max:50',
-            'prodi_id' => 'required',
-        ],
-        [
-            'nama.required' => 'Nama Dosen Wajib Diisi',
-            'nama.min' => 'Nama Dosen Minimal 3 Karakter',
-            'nama.max' => 'Nama Dosen Maksimal 50 Karakter',
-            'email.required' => 'Email Wajib Diisi',
-            'email.email' => 'Email Tidak Valid',
-            'email.unique' => 'Email Sudah Terdaftar',
-            'nip.required' => 'NIP Wajib Diisi',
-            'nip.min' => 'NIP Minimal 3 Karakter',
-            'nip.max' => 'NIP Maksimal 50 Karakter',
-            'nip.unique' => 'NIP Sudah Terdaftar',
-            'prodi_id.required' => 'Prodi Wajib Dipilih',
-            'prodi_id.exists' => 'Prodi Tidak Valid',
+        $request->validate(
+            [
+                'nama' => 'required|min:3|max:50',
+                'email' => 'required|email|unique:users,email',
+                'nip' => 'required|min:3|max:50|unique:dosens,nip',
+                'prodi_id' => 'required|exists:prodi,id',
+                'password' => 'required|min:6|max:50', // Tambahkan validasi password
+            ],
+            [
+                'nama.required' => 'Nama Dosen Wajib Diisi',
+                'nama.min' => 'Nama Dosen Minimal 3 Karakter',
+                'nama.max' => 'Nama Dosen Maksimal 50 Karakter',
+                'email.required' => 'Email Wajib Diisi',
+                'email.email' => 'Email Tidak Valid',
+                'email.unique' => 'Email Sudah Terdaftar',
+                'nip.required' => 'NIP Wajib Diisi',
+                'nip.min' => 'NIP Minimal 3 Karakter',
+                'nip.max' => 'NIP Maksimal 50 Karakter',
+                'nip.unique' => 'NIP Sudah Terdaftar',
+                'prodi_id.required' => 'Prodi Wajib Dipilih',
+                'prodi_id.exists' => 'Prodi Tidak Valid',
+                'password.required' => 'Password Wajib Diisi',
+                'password.min' => 'Password Minimal 6 Karakter',
+                'password.max' => 'Password Maksimal 50 Karakter',
+            ]
+        );
+
+        // Buat User baru
+        $user = User::create([
+            'name' => $request->input('nama'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')), // Gunakan password dari input
         ]);
-        
+
+        // Berikan role dosen
+        $user->assignRole('dosen');
+
+        // Buat data Dosen
         $data = [
-            'nip' => $request->input('nip'),
             'nama' => $request->input('nama'),
             'email' => $request->input('email'),
+            'nip' => $request->input('nip'),
             'prodi_id' => $request->input('prodi_id'),
+            'user_id' => $user->id, // Hubungkan dengan user_id
         ];
 
         Dosen::create($data);
-        return redirect()->route('dosen')->with('success', 'berhasil menambahkan data!');
+
+        return redirect()->route('dosen')->with('success', 'Berhasil menambahkan data!');
     }
+
 
     /**
      * Display the specified resource.

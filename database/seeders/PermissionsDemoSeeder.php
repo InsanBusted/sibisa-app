@@ -42,8 +42,18 @@ class PermissionsDemoSeeder extends Seeder
 
         // // create demo users
         $user = User::factory()->create([
-            'name' => 'Muhammad Insan Kamil.sKom',
-            'email' => 'dosen@gmail.com',
+            'name' => 'bijer.sKom',
+            'email' => 'dosenbijer@gmail.com',
+        ]);
+        $user->assignRole('dosen');
+        $user = User::factory()->create([
+            'name' => 'rafli.sKom',
+            'email' => 'dosenrafli@gmail.com',
+        ]);
+        $user->assignRole('dosen');
+        $user = User::factory()->create([
+            'name' => 'khalik.sKom',
+            'email' => 'dosenkhalik@gmail.com',
         ]);
         $user->assignRole('dosen');
 
