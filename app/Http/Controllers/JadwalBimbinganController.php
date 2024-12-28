@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\JadwalBimbingan as JadwalBimbinganNotification;
+use Illuminate\Support\Facades\Auth;
 
 class JadwalBimbinganController extends Controller
 {
@@ -17,12 +18,53 @@ class JadwalBimbinganController extends Controller
      */
     public function index()
     {
-        $jadwalBimbingan = JadwalBimbingan::with('mahasiswa', 'dosen')->orderBy('id', 'asc')->paginate(5);
+        $user = Auth::user();
+
+        // Cek peran user yang sedang login
+        if ($user->hasRole('mahasiswa')) {
+            // Mahasiswa hanya bisa melihat jadwal mereka sendiri
+            $jadwalBimbingan = JadwalBimbingan::with('mahasiswa', 'dosen')
+                ->where('mahasiswa_id', $user->mahasiswa->id)
+                ->orderBy('id', 'desc')
+                ->get();
+        } else {
+            // Dosen/Admin dapat melihat semua jadwal
+            $jadwalBimbingan = JadwalBimbingan::with('mahasiswa', 'dosen')
+                ->orderBy('id', 'desc')
+                ->get();
+        }
+
+        // Ambil data dosen dan mahasiswa
         $dosen = Dosen::all();
         $mahasiswa = Mahasiswa::all();
         
         // dd($jadwalBimbingan);
         return view('dashboard.index', compact('jadwalBimbingan', 'dosen', 'mahasiswa'));
+    }
+    public function index2()
+    {
+        $user = Auth::user();
+
+        // Cek peran user yang sedang login
+        if ($user->hasRole('dosen')) {
+            // Mahasiswa hanya bisa melihat jadwal mereka sendiri
+            $jadwalBimbingan = JadwalBimbingan::with('mahasiswa', 'dosen')
+                ->where('dosen_id', $user->dosen->id)
+                ->orderBy('id', 'desc')
+                ->get();
+        } else {
+            // Dosen/Admin dapat melihat semua jadwal
+            $jadwalBimbingan = JadwalBimbingan::with('mahasiswa', 'dosen')
+                ->orderBy('id', 'desc')
+                ->get();
+        }
+
+        // Ambil data dosen dan mahasiswa
+        $dosen = Dosen::all();
+        $mahasiswa = Mahasiswa::all();
+        
+        // dd($jadwalBimbingan);
+        return view('dosen.dosen.jadwal', compact('jadwalBimbingan', 'dosen', 'mahasiswa'));
     }
 
     // MENU SEARCH
@@ -86,6 +128,69 @@ class JadwalBimbinganController extends Controller
         return redirect()->route('dashboard')->with('success', 'Berhasil Menambahkan data dan Notifikasi Terkirim!');
     }
 
+    public function store2(Request $request)
+    {
+        // Validasi data
+        $request->validate([
+            'tanggal' => 'required|date',
+            'jam' => 'required',
+            'dosen_id' => 'required|exists:dosens,id',
+            'mahasiswa_id' => 'required|exists:mahasiswas,id',
+            'status' => 'required|in:Pending,Disetujui,Ditolak',
+        ]);
+
+        // Simpan data jadwal ke dalam database
+        $jadwal = JadwalBimbingan::create([
+            'tanggal' => $request->input('tanggal'),
+            'jam' => $request->input('jam'),
+            'dosen_id' => $request->input('dosen_id'),
+            'mahasiswa_id' => $request->input('mahasiswa_id'),
+            'status' => $request->input('status'),
+        ]);
+
+        // Ambil data pengguna (dosen dan mahasiswa) berdasarkan ID
+        $dosenUser = User::where('id', $jadwal->dosen->user_id)->first();
+        $mahasiswaUser = User::where('id', $jadwal->mahasiswa->user_id)->first();
+
+        // Kirim notifikasi ke dosen dan mahasiswa
+        $users = collect([$dosenUser, $mahasiswaUser])->filter(); // Pastikan data tidak null
+        Notification::send($users, new JadwalBimbinganNotification($jadwal->tanggal, $jadwal->jam, $jadwal->status));
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('dashboard-mahasiswa')->with('success', 'Berhasil Menambahkan data dan Notifikasi Terkirim!');
+    }
+    public function store3(Request $request)
+    {
+        // Validasi data
+        $request->validate([
+            'tanggal' => 'required|date',
+            'jam' => 'required',
+            'dosen_id' => 'required|exists:dosens,id',
+            'mahasiswa_id' => 'required|exists:mahasiswas,id',
+            'status' => 'required|in:Pending,Disetujui,Ditolak',
+        ]);
+
+        // Simpan data jadwal ke dalam database
+        $jadwal = JadwalBimbingan::create([
+            'tanggal' => $request->input('tanggal'),
+            'jam' => $request->input('jam'),
+            'dosen_id' => $request->input('dosen_id'),
+            'mahasiswa_id' => $request->input('mahasiswa_id'),
+            'status' => $request->input('status'),
+        ]);
+
+        // Ambil data pengguna (dosen dan mahasiswa) berdasarkan ID
+        $dosenUser = User::where('id', $jadwal->dosen->user_id)->first();
+        $mahasiswaUser = User::where('id', $jadwal->mahasiswa->user_id)->first();
+
+        // Kirim notifikasi ke dosen dan mahasiswa
+        $users = collect([$dosenUser, $mahasiswaUser])->filter(); // Pastikan data tidak null
+        Notification::send($users, new JadwalBimbinganNotification($jadwal->tanggal, $jadwal->jam, $jadwal->status));
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('dashboard-dosen')->with('success', 'Berhasil Menambahkan data dan Notifikasi Terkirim!');
+    }
+
 
     /**
      * Display the specified resource.
@@ -124,6 +229,42 @@ class JadwalBimbinganController extends Controller
     
         return redirect()->route('dashboard')->with('success', 'Berhasil mengubah data!');
     }
+    public function update2(Request $request, JadwalBimbingan $jadwalbimbingan)
+    {
+        $request->validate([
+            'tanggal' => 'required',
+            'jam' => 'required',
+            'status' => 'required',
+        ]);
+    
+        $data = [
+            'tanggal' => $request->input('tanggal'),
+            'jam' => $request->input('jam'),
+            'status' => $request->input('status'),
+        ];
+    
+        $jadwalbimbingan->update($data);
+    
+        return redirect()->route('dashboard-mahasiswa')->with('success', 'Berhasil mengubah data!');
+    }
+    public function update3(Request $request, JadwalBimbingan $jadwalbimbingan)
+    {
+        $request->validate([
+            'tanggal' => 'required',
+            'jam' => 'required',
+            'status' => 'required',
+        ]);
+    
+        $data = [
+            'tanggal' => $request->input('tanggal'),
+            'jam' => $request->input('jam'),
+            'status' => $request->input('status'),
+        ];
+    
+        $jadwalbimbingan->update($data);
+    
+        return redirect()->route('dashboard-dosen')->with('success', 'Berhasil mengubah data!');
+    }
     
     
 
@@ -134,5 +275,15 @@ class JadwalBimbinganController extends Controller
     {
         $jadwalbimbingan->delete();
         return redirect()->route('dashboard')->with('danger', 'Berhasil menghapus data!');
+    }
+    public function destroy2(JadwalBimbingan $jadwalbimbingan)
+    {
+        $jadwalbimbingan->delete();
+        return redirect()->route('dashboard-mahasiswa')->with('danger', 'Berhasil menghapus data!');
+    }
+    public function destroy3(JadwalBimbingan $jadwalbimbingan)
+    {
+        $jadwalbimbingan->delete();
+        return redirect()->route('dashboard-dosen')->with('danger', 'Berhasil menghapus data!');
     }
 }

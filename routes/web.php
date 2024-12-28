@@ -16,13 +16,58 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'role:admin|mahasiswa'])->group(function () {
     Route::get('/mhs', [MahasiswaController::class, 'index2'])->name('index-mahasiswa');
-    Route::get('/mhs/dashboard', [JadwalBimbinganController::class, 'index'])->name('dashboard-mahasiswa');
+
+    // jadwall bimbingan
+    Route::get('/mhs/jadwal', [JadwalBimbinganController::class, 'index'])->name('dashboard-mahasiswa');
+    Route::post('/mhs/jadwal', [JadwalBimbinganController::class, "store2"])->name('add-jadwal-mahasiswa');
+    Route::put('/mhs/jadwal/{jadwalbimbingan}', [JadwalBimbinganController::class, "update2"])->name('edit-jadwal-mahasiswa');
+    Route::delete('/mhs/jadwal/{jadwalbimbingan}', [JadwalBimbinganController::class, "destroy2"])->name('delete-jadwal-mahasiswa');
+
+    // riwayat bimbingan
+    Route::post('/mhs/riwayat', [RiwayatBimbinganController::class, "store2"])->name('add-riwayat-mahasiswa');
+    Route::put('/mhs/riwayat/{riwayatBimbingan}', [RiwayatBimbinganController::class, "update2"])->name('edit-riwayat-mahasiswa');
+    // Route::put('/mhs/riwayat/{riwayatBimbingan}/edited', [RiwayatBimbinganController::class, "update2"])->name('update-riwayat-mahasiswa');
+    Route::get('/mhs/riwayat', [RiwayatBimbinganController::class, "show2"])->name('riwayat-mahasiswa');
+
+    // Forum Diskusi
+    Route::get('/mhs/forums', [ForumController::class, "index2"])->name('forum-mahasiswa');
+    Route::post('/mhs/forums', [ForumController::class, "store2"])->name('add-forum-mahasiswa');
+    Route::put('/mhs/forums/{forum}', [ForumController::class, "update2"])->name('edit-forum-mahasiswa');
+    Route::get('/mhs/forum/{id}', [ForumController::class, 'show2'])->name('detail-forum-mahasiswa');
+    Route::delete('/mhs/forum/{forum}', [ForumController::class, "destroy2"])->name('delete-forum-mahasiswa');
+    Route::get('/mhs/forums/search', [ForumController::class, 'search2'])->name('search-forum-mahasiswa');
+    Route::post('/mhs/forums/{forumId}/replies', [ReplyController::class, 'store2'])->name('add-reply-mahasiswa');
+});
+
+Route::middleware(['auth', 'role:admin|dosen'])->group(function () {
+    Route::get('/dsn', [DosenController::class, 'index2'])->name('index-dosen');
+
+    // jadwall bimbingan 
+    Route::get('/dsn/jadwal', [JadwalBimbinganController::class, 'index2'])->name('dashboard-dosen');
+    Route::post('/dsn/jadwal', [JadwalBimbinganController::class, "store3"])->name('add-jadwal-dosen');
+    Route::put('/dsn/jadwal/{jadwalbimbingan}', [JadwalBimbinganController::class, "update3"])->name('edit-jadwal-dosen');
+    Route::delete('/dsn/jadwal/{jadwalbimbingan}', [JadwalBimbinganController::class, "destroy3"])->name('delete-jadwal-dosen');
+
+    // riwayat bimbingan
+    Route::post('/dsn/riwayat', [RiwayatBimbinganController::class, "store3"])->name('add-riwayat-dosen');
+    Route::put('/dsn/riwayat/{riwayatBimbingan}', [RiwayatBimbinganController::class, "update3"])->name('edit-riwayat-dosen');
+    // Route::put('/dsn/riwayat/{riwayatBimbingan}/edited', [RiwayatBimbinganController::class, "update2"])->name('update-riwayat-dosen');
+    Route::get('/dsn/riwayat', [RiwayatBimbinganController::class, "show3"])->name('riwayat-dosen');
+
+    // Forum Diskusi
+    Route::get('/dsn/forums', [ForumController::class, "index3"])->name('forum-dosen');
+    Route::post('/dsn/forums', [ForumController::class, "store3"])->name('add-forum-dosen');
+    Route::put('/dsn/forums/{forum}', [ForumController::class, "update3"])->name('edit-forum-dosen');
+    Route::get('/dsn/forum/{id}', [ForumController::class, 'show3'])->name('detail-forum-dosen');
+    Route::delete('/dsn/forum/{forum}', [ForumController::class, "destroy3"])->name('delete-forum-dosen');
+    Route::get('/dsn/forums/search', [ForumController::class, 'search3'])->name('search-forum-dosen');
+    Route::post('/dsn/forums/{forumId}/replies', [ReplyController::class, 'store3'])->name('add-reply-dosen');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [JadwalBimbinganController::class, "index"])->name('dashboard');
     Route::put('/dashboard/{jadwalbimbingan}', [JadwalBimbinganController::class, "update"])->name('edit-jadwal');
-    Route::get('/search', [JadwalBimbinganController::class, 'search'])->name('search-jadwal');
+    Route::get('/jadwal-bimbingan/search', [JadwalBimbinganController::class, 'search'])->name('search-jadwal');
     Route::delete('/dashboard/{jadwalbimbingan}', [JadwalBimbinganController::class, "destroy"])->name('delete-jadwal');
     Route::post('/dashboard', [JadwalBimbinganController::class, "store"])->name('add-jadwal');
     // prodi

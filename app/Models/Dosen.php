@@ -17,4 +17,9 @@ class Dosen extends Model
     public function jadwalbimbingan() {
         return $this->hasMany(JadwalBimbingan::class,'dosen_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id'); // Sesuaikan nama foreign key jika berbeda
+    }
 }

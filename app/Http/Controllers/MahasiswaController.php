@@ -64,6 +64,8 @@ class MahasiswaController extends Controller
         return view('mahasiswa.index', compact('prodi', 'mahasiswa', 'message'));
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      */

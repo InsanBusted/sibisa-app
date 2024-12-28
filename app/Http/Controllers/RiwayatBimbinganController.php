@@ -74,6 +74,84 @@ class RiwayatBimbinganController extends Controller
         return redirect()->route('detail-riwayat', $request->mahasiswa_id)
                          ->with('success', 'Riwayat bimbingan berhasil ditambahkan.');
     }
+    public function store2(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'jadwal_bimbingan_id' => 'required|exists:jadwal_bimbingans,id',
+            'catatan_dosen' => 'nullable|string',
+            'catatan_mahasiswa' => 'nullable|string',
+            'status' => 'required|in:Proses,Revisi,ACC',
+            'file' => 'nullable|file|mimes:jpg,jpeg,png,pdf,docx|max:5048', // Validasi file (maksimal 5MB)
+        ]);
+    
+        // Ambil jadwal bimbingan yang dipilih berdasarkan jadwal_bimbingan_id
+        $jadwalBimbingan = JadwalBimbingan::findOrFail($request->jadwal_bimbingan_id);
+    
+        // Hapus riwayat bimbingan yang sudah ada untuk jadwal_bimbingan_id yang sama
+        $jadwalBimbingan->riwayatBimbingan()->delete();
+
+        // Simpan file jika ada
+        $filePath = null;
+        if ($request->hasFile('file')) {
+            $filePath = $request->file('file')->store('uploads', 'public'); // Menyimpan file di folder storage/app/public/uploads
+        }
+    
+        // Tambahkan riwayat bimbingan yang baru
+        RiwayatBimbingan::create([
+            'jadwal_bimbingan_id' => $request->jadwal_bimbingan_id,
+            'catatan_dosen' => $request->catatan_dosen, // Catatan dosen
+            'catatan_mahasiswa' => $request->catatan_mahasiswa, // Catatan mahasiswa
+            'status' => $request->status,
+            'file' => $filePath, // Simpan path file jika ada
+        ]);
+
+         // Set session flag untuk menunjukkan catatan baru
+        session()->flash('edited_riwayat_bimbingan', true);
+    
+        // Redirect dengan pesan sukses
+        return redirect()->route('riwayat-mahasiswa')
+                         ->with('success', 'Riwayat bimbingan berhasil ditambahkan.');
+    }
+    public function store3(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'jadwal_bimbingan_id' => 'required|exists:jadwal_bimbingans,id',
+            'catatan_dosen' => 'nullable|string',
+            'catatan_mahasiswa' => 'nullable|string',
+            'status' => 'required|in:Proses,Revisi,ACC',
+            'file' => 'nullable|file|mimes:jpg,jpeg,png,pdf,docx|max:5048', // Validasi file (maksimal 5MB)
+        ]);
+    
+        // Ambil jadwal bimbingan yang dipilih berdasarkan jadwal_bimbingan_id
+        $jadwalBimbingan = JadwalBimbingan::findOrFail($request->jadwal_bimbingan_id);
+    
+        // Hapus riwayat bimbingan yang sudah ada untuk jadwal_bimbingan_id yang sama
+        $jadwalBimbingan->riwayatBimbingan()->delete();
+
+        // Simpan file jika ada
+        $filePath = null;
+        if ($request->hasFile('file')) {
+            $filePath = $request->file('file')->store('uploads', 'public'); // Menyimpan file di folder storage/app/public/uploads
+        }
+    
+        // Tambahkan riwayat bimbingan yang baru
+        RiwayatBimbingan::create([
+            'jadwal_bimbingan_id' => $request->jadwal_bimbingan_id,
+            'catatan_dosen' => $request->catatan_dosen, // Catatan dosen
+            'catatan_mahasiswa' => $request->catatan_mahasiswa, // Catatan mahasiswa
+            'status' => $request->status,
+            'file' => $filePath, // Simpan path file jika ada
+        ]);
+
+         // Set session flag untuk menunjukkan catatan baru
+        session()->flash('edited_riwayat_bimbingan', true);
+    
+        // Redirect dengan pesan sukses
+        return redirect()->route('riwayat-dosen')
+                         ->with('success', 'Riwayat bimbingan berhasil ditambahkan.');
+    }
     
 
     /**
@@ -89,6 +167,51 @@ class RiwayatBimbinganController extends Controller
 
         return view('riwayat_bimbingan.detail', compact('mahasiswa', 'jadwalBimbingans'));
     }
+    public function show2()
+{
+    $user = Auth::user(); // Mendapatkan user yang sedang login
+
+    // Cek jika user adalah mahasiswa
+    if ($user->hasRole('mahasiswa')) {
+        $mahasiswa = $user->mahasiswa; // Mengambil data mahasiswa terkait user yang login
+
+        if (!$mahasiswa) {
+            abort(404, 'Mahasiswa tidak ditemukan.');
+        }
+
+        // Ambil jadwal bimbingan mahasiswa yang sedang login
+        $jadwalBimbingans = $mahasiswa->jadwalbimbingan()->with(['riwayatBimbingan', 'dosen'])->paginate(5);
+    } else {
+        // Jika bukan mahasiswa, admin dapat melihat semua data
+        abort(403, 'Unauthorized access.');
+    }
+
+    return view('dashboard.riwayat', compact('mahasiswa', 'jadwalBimbingans'));
+}
+    public function show3()
+{
+    $user = Auth::user(); // Mendapatkan user yang sedang login
+
+    // Cek jika user adalah mahasiswa
+    if ($user->hasRole('dosen')) {
+        $dosen = $user->dosen; // Mengambil data mahasiswa terkait user yang login
+        $mahasiswa = $user->mahasiswa; // Mengambil data mahasiswa terkait user yang login
+
+        if (!$dosen) {
+            abort(404, 'Dosen tidak ditemukan.');
+        }
+
+        // Ambil jadwal bimbingan mahasiswa yang sedang login
+        $jadwalBimbingans = $dosen->jadwalbimbingan()->with(['riwayatBimbingan', 'mahasiswa'])->paginate(5);
+    } else {
+        // Jika bukan mahasiswa, admin dapat melihat semua data
+        abort(403, 'Unauthorized access.');
+    }
+
+    return view('dosen.dosen.riwayat', compact('dosen', 'jadwalBimbingans', 'mahasiswa'));
+}
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -144,6 +267,78 @@ class RiwayatBimbinganController extends Controller
         return redirect()->route('detail-riwayat', $riwayatBimbingan->jadwalBimbingan->mahasiswa_id)
                         ->with('success', 'Riwayat bimbingan berhasil diperbarui.');
     }
+    public function update2(Request $request, RiwayatBimbingan $riwayatBimbingan)
+    {
+        // Validasi input
+        $request->validate([
+            'catatan_dosen' => 'nullable|string',
+            'catatan_mahasiswa' => 'nullable|string',
+            'status' => 'required|in:Proses,Revisi,ACC',
+            'file' => 'nullable|file|mimes:jpg,jpeg,png,pdf,docx|max:5048', // Validasi file (maksimal 5MB)
+        ]);
+
+        // Simpan file jika ada
+        $filePath = $riwayatBimbingan->file; // Menyimpan file lama jika tidak ada file baru
+        if ($request->hasFile('file')) {
+            // Hapus file lama jika ada file baru
+            if ($filePath) {
+                Storage::delete('public/' . $filePath);
+            }
+            // Simpan file baru
+            $filePath = $request->file('file')->store('uploads', 'public');
+        }
+
+        // Perbarui data riwayat bimbingan
+        $riwayatBimbingan->update([
+            'catatan_dosen' => $request->catatan_dosen,
+            'catatan_mahasiswa' => $request->catatan_mahasiswa,
+            'status' => $request->status,
+            'file' => $filePath,
+        ]);
+
+        // Set session flag untuk menunjukkan riwayat bimbingan yang diubah
+        session()->flash('edited_riwayat_bimbingan', true);
+
+        // Redirect ke route 'riwayat-mahasiswa' dengan parameter mahasiswaId
+        return redirect()->route('riwayat-mahasiswa')->with('success', 'Riwayat bimbingan berhasil diperbarui.');
+    }
+    public function update3(Request $request, RiwayatBimbingan $riwayatBimbingan)
+    {
+        // Validasi input
+        $request->validate([
+            'catatan_dosen' => 'nullable|string',
+            'catatan_mahasiswa' => 'nullable|string',
+            'status' => 'required|in:Proses,Revisi,ACC',
+            'file' => 'nullable|file|mimes:jpg,jpeg,png,pdf,docx|max:5048', // Validasi file (maksimal 5MB)
+        ]);
+
+        // Simpan file jika ada
+        $filePath = $riwayatBimbingan->file; // Menyimpan file lama jika tidak ada file baru
+        if ($request->hasFile('file')) {
+            // Hapus file lama jika ada file baru
+            if ($filePath) {
+                Storage::delete('public/' . $filePath);
+            }
+            // Simpan file baru
+            $filePath = $request->file('file')->store('uploads', 'public');
+        }
+
+        // Perbarui data riwayat bimbingan
+        $riwayatBimbingan->update([
+            'catatan_dosen' => $request->catatan_dosen,
+            'catatan_mahasiswa' => $request->catatan_mahasiswa,
+            'status' => $request->status,
+            'file' => $filePath,
+        ]);
+
+        // Set session flag untuk menunjukkan riwayat bimbingan yang diubah
+        session()->flash('edited_riwayat_bimbingan', true);
+
+        // Redirect ke route 'riwayat-mahasiswa' dengan parameter mahasiswaId
+        return redirect()->route('riwayat-dosen')->with('success', 'Riwayat bimbingan berhasil diperbarui.');
+    }
+
+
 
 
 

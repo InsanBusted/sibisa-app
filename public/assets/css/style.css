@@ -266,7 +266,7 @@ img {
 }
 
 .main-wrapper.bg-mahasiswa-dosen {
-  background: linear-gradient(90deg, #1460C8 17%, #0A2F62 84%);
+  background: #0A2F62;
 }
 
 @media (max-width: 768px) {

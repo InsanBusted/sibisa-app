@@ -2,8 +2,8 @@
 
 @section('content')
     @php
-        $jadwalBimbingan = Auth::user()->hasRole('mahasiswa')
-            ? $jadwalBimbingan->where('mahasiswa_id', Auth::user()->mahasiswa->id)
+        $jadwalBimbingan = Auth::user()->hasRole('dosen')
+            ? $jadwalBimbingan->where('dosen_id', Auth::user()->dosen->id)
             : $jadwalBimbingan; // Admin dapat melihat semua jadwal
     @endphp
 
@@ -315,7 +315,7 @@
             <div class="col-6"></div>
         </div>
     @endrole
-    @role('admin|mahasiswa')
+    @role('admin|dosen')
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <div class="row justify-content-center">
@@ -362,7 +362,7 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{ route('add-jadwal-mahasiswa') }}" method="POST">
+                                            <form action="{{ route('add-jadwal-dosen') }}" method="POST">
                                                 @csrf
                                                 <div class="mb-3">
                                                     <label for="tanggal" class="form-label">Tanggal</label>
@@ -373,20 +373,27 @@
                                                     <input type="time" class="form-control" id="jam" name="jam" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="dosen_id" class="form-label">Dosen</label>
-                                                    <select class="form-select" id="dosen_id" name="dosen_id" required>
-                                                        <option value="" disabled selected>Pilih Dosen</option>
-                                                        @foreach ($dosen as $d)
-                                                            <option value="{{ $d->id }}">{{ $d->nama }}</option>
+                                                    <label for="mahasiswa_id" class="form-label">Mahasiswa</label>
+                                                    <select class="form-select" id="mahasiswa_id" name="mahasiswa_id" required>
+                                                        <option value="" disabled selected>Pilih Mahasiswa</option>
+                                                        @foreach ($mahasiswa as $mhs)
+                                                            <option value="{{ $mhs->id }}">{{ $mhs->nama }} - {{ $mhs->nim }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                @role('mahasiswa')
-                                                    <!-- Input hidden untuk mahasiswa_id sesuai user login -->
-                                                    <input type="hidden" name="mahasiswa_id" value="{{ auth()->user()->mahasiswa->id }}">
-                                                    <!-- Input hidden untuk status otomatis Pending -->
-                                                    <input type="hidden" name="status" value="Pending">
+                                                @role('dosen')
+                                                    <!-- Input hidden untuk dosen_id sesuai user login -->
+                                                    <input type="hidden" name="dosen_id" value="{{ auth()->user()->dosen->id }}">
                                                 @endrole
+                                                <div class="col-12 mb-15">
+                                                    <label for="status">Status</label>
+                                                    <select class="form-control" name="status" required>
+                                                        <option hidden>Pilih Status</option>
+                                                        <option value="Pending">Pending</option>
+                                                        <option value="Disetujui">Disetujui</option>
+                                                        <option value="Ditolak">Ditolak</option>
+                                                    </select>
+                                                </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
                                                     <button type="submit" class="btn btn-primary">Buat Jadwal</button>
@@ -447,7 +454,7 @@
                                                                     </div>
                                                                     <div class="modal-body ">
                                                                         <form
-                                                                            action="{{ route('edit-jadwal-mahasiswa', $jadwal->id) }}"
+                                                                            action="{{ route('edit-jadwal-dosen', $jadwal->id) }}"
                                                                             method="post">
                                                                             @csrf
                                                                             @method('put')
@@ -482,6 +489,7 @@
                                                                                         </select>
                                                                                     </div>
                                                                                 @endrole
+                                                                                @role('mahasiswa')
                                                                                 <div class="col-12 mb-3">
                                                                                     <label for="status">STATUS</label>
                                                                                     <input type="text"
@@ -491,6 +499,7 @@
                                                                                         readonly>
                                                                                     <!-- Menampilkan status yang tidak bisa diubah -->
                                                                                 </div>
+                                                                                @endrole
                                                                             </div>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -524,7 +533,7 @@
                                                                     <div class="modal-body">
                                                                         <p>Anda Yakin Ingin Menghapus Jadwal Ini?</p>
                                                                     </div>
-                                                                    <form action="{{ route('delete-jadwal-mahasiswa', $jadwal->id) }}"
+                                                                    <form action="{{ route('delete-jadwal-dosen', $jadwal->id) }}"
                                                                         method="post">
                                                                         @csrf
                                                                         @method('delete')

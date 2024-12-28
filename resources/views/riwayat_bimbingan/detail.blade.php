@@ -120,7 +120,15 @@
     <form action="{{ route('add-riwayat') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="mahasiswa_id" value="{{ $mahasiswa->id }}">
-        <input type="hidden" name="jadwal_bimbingan_id">
+        <div class="mb-3">
+            <label for="jadwal_bimbingan_id">Jadwal Bimbingan</label>
+            <select name="jadwal_bimbingan_id" id="jadwal_bimbingan_id" class="form-control">
+                <option value="" disabled selected>Pilih Jadwal Bimbingan</option>
+                @foreach ($jadwalBimbingans as $jadwal)
+                    <option value="{{ $jadwal->id }}">{{ $jadwal->tanggal }}</option>
+                @endforeach
+            </select>
+        </div>
     
         
         <div class="mb-3">

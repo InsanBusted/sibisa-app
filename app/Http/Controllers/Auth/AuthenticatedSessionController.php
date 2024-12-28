@@ -32,7 +32,11 @@ class AuthenticatedSessionController extends Controller
         if (Auth::user()->hasRole('mahasiswa')) {
             return redirect()->route('index-mahasiswa');
         }
-
+        // Redirect berdasarkan peran
+        if (Auth::user()->hasRole('dosen')) {
+            return redirect()->route('index-dosen');
+        }
+        
 
         return redirect()->intended(route('dashboard', absolute: false));
     }

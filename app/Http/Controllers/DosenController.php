@@ -6,6 +6,7 @@ use App\Models\Dosen;
 use App\Models\JadwalBimbingan;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DosenController extends Controller
 {
@@ -24,6 +25,18 @@ class DosenController extends Controller
         return view('dosen.index', compact('dosen', 'prodi', 'message',));
 
     }
+    public function index2()
+    {
+        $user = Auth::user(); // Mendapatkan user yang sedang login
+        $dosen = $user->dosen; // Mengambil data dosen berdasarkan relasi
+
+        if (!$dosen) {
+            return redirect()->back()->with('error', 'Profil dosen tidak ditemukan.');
+        }
+
+        return view('dosen.dosen.index', compact('dosen'));
+    }
+
 
     public function search(Request $request)
     {
