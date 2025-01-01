@@ -57,7 +57,7 @@
                                             <select class="form-control select2" name="dosen_id">
                                                 <option hidden>Pilih Dosen</option>
                                                 @foreach ($dosen as $d)
-                                                    <option value="{{ $d->id }}">{{ $d->nama }}</option>
+                                                    <option value="{{ $d->id }}">{{ $d->nama }} - {{ $d->nip }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -66,7 +66,7 @@
                                             <select class="form-control select2" name="mahasiswa_id">
                                                 <option hidden>Pilih Mahasiswa</option>
                                                 @foreach ($mahasiswa as $mhs)
-                                                    <option value="{{ $mhs->id }}">{{ $mhs->nama }}</option>
+                                                    <option value="{{ $mhs->id }}">{{ $mhs->nama }} - {{ $mhs->nim }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -180,7 +180,7 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $jadwal->tanggal }}</td>
                                                     <td>{{ $jadwal->jam }}</td>
-                                                    <td>{{ optional($jadwal->dosen)->nama }}</td>
+                                                    <td>{{ optional($jadwal->dosen)->nama }} </td>
                                                     <td>{{ optional($jadwal->mahasiswa)->nama }}</td>
                                                     <td>
                                                         @if ($jadwal->status == 'Pending')

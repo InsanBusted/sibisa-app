@@ -29,147 +29,7 @@
 
                     <ul class="header-notification-area">
 
-                        <!--Mail-->
-                        <li class="adomx-dropdown col-auto">
-                            <a class="toggle" href="#"><i class="zmdi zmdi-email-open"></i><span class="badge"></span></a>
-
-                            <!-- Dropdown -->
-                            <div class="adomx-dropdown-menu dropdown-menu-mail">
-                                <div class="head">
-                                    <h4 class="title">You have 3 new mail.</h4>
-                                </div>
-                                <div class="body custom-scroll">
-                                    <ul>
-                                        <li>
-                                            <a href="#">
-                                                <div class="image"><img src="assets/images/avatar/avatar-2.jpg" alt=""></div>
-                                                <div class="content">
-                                                    <h6>Sub: New Account</h6>
-                                                    <p>There are many variations of passages of Lorem Ipsum available. </p>
-                                                </div>
-                                                <span class="reply"><i class="zmdi zmdi-mail-reply"></i></span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="image"><img src="assets/images/avatar/avatar-1.jpg" alt=""></div>
-                                                <div class="content">
-                                                    <h6>Sub: Mail Support</h6>
-                                                    <p>There are many variations of passages of Lorem Ipsum available. </p>
-                                                </div>
-                                                <span class="reply"><i class="zmdi zmdi-mail-reply"></i></span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="image"><img src="assets/images/avatar/avatar-2.jpg" alt=""></div>
-                                                <div class="content">
-                                                    <h6>Sub: Product inquiry</h6>
-                                                    <p>There are many variations of passages of Lorem Ipsum available. </p>
-                                                </div>
-                                                <span class="reply"><i class="zmdi zmdi-mail-reply"></i></span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="image"><img src="assets/images/avatar/avatar-1.jpg" alt=""></div>
-                                                <div class="content">
-                                                    <h6>Sub: Mail Support</h6>
-                                                    <p>There are many variations of passages of Lorem Ipsum available. </p>
-                                                </div>
-                                                <span class="reply"><i class="zmdi zmdi-mail-reply"></i></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </li>
-
-                        <!--Notification-->
-                        <li class="adomx-dropdown col-auto">
-                            <a class="toggle" href="#"><i class="zmdi zmdi-notifications"></i><span class="badge"></span></a>
-
-                            <!-- Dropdown -->
-                            <div class="adomx-dropdown-menu dropdown-menu-notifications">
-                                <div class="head">
-                                    <h5 class="title">You have 4 new notification.</h5>
-                                </div>
-                                <div class="body custom-scroll">
-                                    <ul>
-                                        <li>
-                                            <a href="#">
-                                                <i class="zmdi zmdi-notifications-none"></i>
-                                                <p>There are many variations of pages available.</p>
-                                                <span>11.00 am   Today</span>
-                                            </a>
-                                            <button class="delete"><i class="zmdi zmdi-close-circle-o"></i></button>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="zmdi zmdi-block"></i>
-                                                <p>There are many variations of pages available.</p>
-                                                <span>11.00 am   Today</span>
-                                            </a>
-                                            <button class="delete"><i class="zmdi zmdi-close-circle-o"></i></button>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="zmdi zmdi-info-outline"></i>
-                                                <p>There are many variations of pages available.</p>
-                                                <span>11.00 am   Today</span>
-                                            </a>
-                                            <button class="delete"><i class="zmdi zmdi-close-circle-o"></i></button>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="zmdi zmdi-shield-security"></i>
-                                                <p>There are many variations of pages available.</p>
-                                                <span>11.00 am   Today</span>
-                                            </a>
-                                            <button class="delete"><i class="zmdi zmdi-close-circle-o"></i></button>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="zmdi zmdi-notifications-none"></i>
-                                                <p>There are many variations of pages available.</p>
-                                                <span>11.00 am   Today</span>
-                                            </a>
-                                            <button class="delete"><i class="zmdi zmdi-close-circle-o"></i></button>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="zmdi zmdi-block"></i>
-                                                <p>There are many variations of pages available.</p>
-                                                <span>11.00 am   Today</span>
-                                            </a>
-                                            <button class="delete"><i class="zmdi zmdi-close-circle-o"></i></button>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="zmdi zmdi-info-outline"></i>
-                                                <p>There are many variations of pages available.</p>
-                                                <span>11.00 am   Today</span>
-                                            </a>
-                                            <button class="delete"><i class="zmdi zmdi-close-circle-o"></i></button>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="zmdi zmdi-shield-security"></i>
-                                                <p>There are many variations of pages available.</p>
-                                                <span>11.00 am   Today</span>
-                                            </a>
-                                            <button class="delete"><i class="zmdi zmdi-close-circle-o"></i></button>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="footer">
-                                    <a href="#" class="view-all">view all</a>
-                                </div>
-                            </div>
-
-                        </li>
-
+                        
                         <!--User-->
                         <li class="adomx-dropdown col-auto">
                             <a class="toggle" href="#">
@@ -179,17 +39,11 @@
                             <!-- Dropdown -->
                             <div class="adomx-dropdown-menu dropdown-menu-user">
                                 <div class="head">
-                                    <h5 class="name"><a href="#">Madison Howard</a></h5>
-                                    <a class="mail" href="#">mailnam@mail.com</a>
+                                    <h5 class="name"><a href="#">{{ Auth::user()->name }}</a></h5>
+                                    <a class="mail" href="#">{{ Auth::user()->email }}</a>
                                 </div>
                                 <div class="body">
                                     <ul>
-                                        <li><a href="#"><i class="zmdi zmdi-account"></i>Profile</a></li>
-                                        <li><a href="#"><i class="zmdi zmdi-email-open"></i>Inbox</a></li>
-                                        <li><a href="#"><i class="zmdi zmdi-wallpaper"></i>Activity</a></li>
-                                    </ul>
-                                    <ul>
-                                        <li><a href="#"><i class="zmdi zmdi-settings"></i>Setting</a></li>
                                         <li>
                                             <form method="POST" action="{{ route('logout') }}">
                                                 @csrf
@@ -201,10 +55,6 @@
                                                 </a>
                                             </form>
                                         </li>
-                                    </ul>
-                                    <ul>
-                                        <li><a href="#"><i class="zmdi zmdi-paypal"></i>Payment</a></li>
-                                        <li><a href="#"><i class="zmdi zmdi-google-pages"></i>Invoice</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -343,3 +193,15 @@ $mahasiswa = $mahasiswa ?? null; // Ambil mahasiswa pertama dari koleksi
     </div>
 </nav>
 @endrole
+@guest
+<nav class="navbar navbar-expand-lg navbar-white bg-white text-dark p-3" >
+    <div class="container-fluid align-items-center justify-content-center">
+        <!-- Logo -->
+        <div class="d-flex align-items-center">
+            <h2 class=""><a href="#" class="text-decoration-none text-primary-sibisa">
+               <i> SIBISA APP</i>
+            </a></h2>
+        </div>
+    </div>
+</nav>
+@endguest

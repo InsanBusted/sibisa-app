@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo/logo-tab.png">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/images/logo/logo-tab.png')}}">
 
     <!-- CSS
 	============================================ -->
@@ -43,6 +43,9 @@
     @role('admin')
     <div class="main-wrapper">
     @endrole
+    @guest
+    <div class="main-wrapper bg-guest">
+    @endguest
     @role('mahasiswa|dosen')
     <div class="main-wrapper bg-mahasiswa-dosen">
     @endrole
@@ -60,18 +63,25 @@
         </div><!-- Side Header End -->
         @endrole
         <!-- Content Body Start -->
-        <div class="content-body">
+        <div class="content-body beranda">
 
             @yield("content")
 
         </div><!-- Content Body End -->
-
+       
+        @auth
         <!-- Footer Section Start -->
         <div class="footer-section">
             @include("admin.layouts.footer")
         </div><!-- Footer Section End -->
-
+        @endauth
     </div>
+    @guest
+        <!-- Footer Section Start -->
+        <div class="footer-section bg-footer-guest">
+            @include("admin.layouts.footer")
+        </div><!-- Footer Section End -->
+    @endguest
 
     <!-- JS
 ============================================ -->

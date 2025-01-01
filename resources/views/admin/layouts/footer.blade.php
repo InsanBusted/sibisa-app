@@ -1,7 +1,7 @@
-<div class="container-fluid">
+<div class="container bg-transparent">
 
     <div class="footer-copyright text-center">
-        <p class="text-body-light">2024 &copy; SIBISA</p>
+        <i><p class="text-dark fw-bold ">2024 &copy; MADE IN BY SIBISA</p></i>
     </div>
 
 </div>

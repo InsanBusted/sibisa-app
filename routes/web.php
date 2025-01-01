@@ -9,11 +9,24 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\RiwayatBimbinganController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+
+    if (Auth::check()) {
+        if (Auth::user()->hasRole('dosen')) {
+            return redirect()->route('index-dosen'); 
+        } elseif (Auth::user()->hasRole('mahasiswa')) {
+            return redirect()->route('index-mahasiswa'); 
+        } elseif (Auth::user()->hasRole('admin')) {
+            return redirect()->route('dashboard'); 
+        }
+    }
     return view('welcome');
-});
+})->name('beranda');
+
+
 
 Route::get('/send-mail', [jadwalMailController::class, 'index']);
 

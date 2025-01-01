@@ -261,7 +261,7 @@ class JadwalBimbinganController extends Controller
             'jam' => 'required',
             'status' => 'required',
         ]);
-    
+
         $data = [
             'tanggal' => $request->input('tanggal'),
             'jam' => $request->input('jam'),
