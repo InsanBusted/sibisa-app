@@ -59,15 +59,25 @@
         <div class="side-header show">
             <button class="side-header-close"><i class="zmdi zmdi-close"></i></button>
             <!-- Side Header Inner Start -->
-            @include("admin.layouts.side-header")
+            @include("admin.layouts.side-header")   
         </div><!-- Side Header End -->
         @endrole
         <!-- Content Body Start -->
-        <div class="content-body beranda">
+        @auth
+        <div class="content-body">
 
             @yield("content")
 
         </div><!-- Content Body End -->
+        @endauth
+        @guest
+        <div class="content-body beranda">
+
+            @yield("konten-beranda")
+
+        </div><!-- Content Body End -->
+        @endguest
+        <!-- Content Body Start -->
        
         @auth
         <!-- Footer Section Start -->
@@ -75,13 +85,14 @@
             @include("admin.layouts.footer")
         </div><!-- Footer Section End -->
         @endauth
+        @guest
+            <!-- Footer Section Start -->
+            <div class="footer-section guest bg-white">
+                @include("admin.layouts.footer")
+            </div><!-- Footer Section End -->
+        @endguest
+        
     </div>
-    @guest
-        <!-- Footer Section Start -->
-        <div class="footer-section bg-footer-guest">
-            @include("admin.layouts.footer")
-        </div><!-- Footer Section End -->
-    @endguest
 
     <!-- JS
 ============================================ -->

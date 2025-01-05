@@ -23,7 +23,7 @@ Route::get('/', function () {
             return redirect()->route('dashboard'); 
         }
     }
-    return view('welcome');
+    return view('landingpage');
 })->name('beranda');
 
 

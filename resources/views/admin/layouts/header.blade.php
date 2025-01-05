@@ -194,7 +194,7 @@ $mahasiswa = $mahasiswa ?? null; // Ambil mahasiswa pertama dari koleksi
 </nav>
 @endrole
 @guest
-<nav class="navbar navbar-expand-lg navbar-white bg-white text-dark p-3" >
+<nav class="navbar navbar-expand-md navbar-white bg-white text-dark p-3" >
     <div class="container-fluid align-items-center justify-content-center">
         <!-- Logo -->
         <div class="d-flex align-items-center">
